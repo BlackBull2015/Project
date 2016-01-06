@@ -1,0 +1,4 @@
+00 = Front
+01 = Back
+10 = left 
+11 = Right
