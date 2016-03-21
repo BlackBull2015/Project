@@ -1,25 +1,20 @@
 /* Sweep
- by BARRAGAN <http://barraganstudio.com>
- This example code is in the public domain.
+By Eric
 
- modified 8 Nov 2013
- by Scott Fitzgerald
- http://www.arduino.cc/en/Tutorial/Sweep
+Servos for SLATAV
 */
 
 #include <Servo.h>
 
 Servo Leg1Ser1; //servo for first leg servo no 1
-
 Servo Leg2Ser1; //servo for second leg servo no 1
-
 Servo Leg3Ser1; //servo for second leg servo no 1
 
-int Sensor1 = 1;
+int Sensor1 = 2;
 int Sensor2 = 2;
 int Sensor3 = 3;
 
-int SensorDetect = 1;
+int SensorDetect = 0;
 
 
 int leg1s1, leg2s1, leg3s1;
@@ -28,47 +23,57 @@ int maxpos = 180;
 int pos;
 int runFlag = 0;
 
-String message;
-
+String message = "";
 void setup()
+
 {
   Serial.begin(9600);
   pinMode(Sensor1, INPUT);
-  pinMode(Sensor2, INPUT);
+//  pinMode(Sensor2, INPUT);
   pinMode(Sensor3, INPUT);
-
+Serial.write(digitalRead(Sensor1));
   initServos();
 }
 
 void loop()
 {
-
+message = "";
   if(Serial.available()){
     message = Serial.readString();
-  }
+    Serial.print(message);
+    }
 
-if(message == "lock"){
+ // Serial.write("alive");
+
+if(message.startsWith("lock")){
+  Serial.write("locked");
   runFlag = 0;
-}else if(message == "unlock"){
+}else if(message.startsWith("unlock")){
+  Serial.write("unlocked");
   runFlag = 1;
 }
 
 
   
   if(runFlag == 1) {
-    
-      if(message == "forward"){
+     // Serial.write("in runtime");
+      if(message.startsWith("forward")){
   
-}else if(message == "reverse"){
+}else if(message.startsWith("reverse")){
   
-}else if(message == "left"){
+}else if(message.startsWith("left")){
   
-}else if(message == "right"){
+}else if(message.startsWith("right")){
   
-}else if(message == "up"){
+}else if(message.startsWith("up")){
+  int i = 0;
+  for(i = 0; i < 20; i++)
+  legUp1();
   
-}else if(message == "down"){
-  
+}else if(message.startsWith("down")){
+  int i = 0;
+  for(i = 0; i < 20; i++)
+  legDown1();
 }
     
       sensorCheck();
@@ -79,15 +84,19 @@ if(message == "lock"){
 
 
 void sensorCheck() {
-  while (digitalRead(Sensor1) != SensorDetect ) {
+
+ //
+
+   //Serial.print(digitalRead(Sensor1));
+  if (digitalRead(Sensor1) != SensorDetect ) {
     legDown1();
   }
-  while (digitalRead(Sensor2) != SensorDetect ) {
-    legDown2();
-  }
-  while (digitalRead(Sensor3) != SensorDetect ) {
-    legDown3();
-  }
+  //while (digitalRead(Sensor2) != SensorDetect ) {
+  //  legDown2();
+ // }
+ // while (digitalRead(Sensor3) != SensorDetect ) {
+ //   legDown3();
+ // }
 }
 
 void legUp1()
