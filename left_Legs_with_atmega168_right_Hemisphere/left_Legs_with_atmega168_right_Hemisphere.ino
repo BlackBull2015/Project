@@ -86,7 +86,7 @@ void loop()
       for (i = 0; i < 20; i++){
         legDown1();
         legDown2();
-        legDown3();} 
+        legDown3();}
     }
  //   sensorCheck();
     delay(10);
@@ -108,28 +108,28 @@ void sensorCheck() {
 }
 
 void legUp1(){
-  Leg1Ser1.write(leg1s1++);
-}
-
-void legDown1(){
   Leg1Ser1.write(leg1s1--);
 }
 
+void legDown1(){
+  Leg1Ser1.write(leg1s1++);
+}
+
 void legUp2(){
-  Leg2Ser1.write(leg2s1++);
+  Leg2Ser1.write(leg2s1--);
 }
 
 void legDown2(){
-  Leg2Ser1.write(leg2s1--);
+  Leg2Ser1.write(leg2s1++);
 }
 void legUp3(){
   //3rd has to be reversed due to design
-  Leg3Ser1.write(leg3s1--);
+  Leg3Ser1.write(leg3s1++);
 }
 
 void legDown3(){
   //3rd has to be reversed due to design
-  Leg3Ser1.write(leg3s1++);
+  Leg3Ser1.write(leg3s1--);
 
 }
 void initServos() {
